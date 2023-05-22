@@ -7,6 +7,9 @@ app.use(express.json());
 const userRouter = require("./api/users/user.router");
 
 app.use("/api/users", userRouter);
+app.get("/", (req, res) => {
+  res.send("hello world");
+});
 
 const port = process.env.APP_PORT || 3000;
 app.listen(port, () => {
