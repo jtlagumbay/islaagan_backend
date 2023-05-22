@@ -4,9 +4,8 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const userRouter = require("./api/users/user.router");
-
-app.use("/api/users", userRouter);
+const userRouter = require("./users/user.router");
+app.use("/users", userRouter);
 app.get("/", (req, res) => {
   res.send("hello world");
 });
