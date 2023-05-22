@@ -1,1 +1,1 @@
-const here = require("./api/index")
+const here = require("./index");

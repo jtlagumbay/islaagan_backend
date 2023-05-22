@@ -4,10 +4,10 @@ const express = require("express");
 const app = express();
 app.use(express.json());
 
-const userRouter = require("./users/user.router");
+const userRouter = require("./api/users/user.router");
 app.use("/users", userRouter);
 app.get("/", (req, res) => {
-  res.send("hello world");
+  res.send("ISLAag Backend");
 });
 
 const port = process.env.APP_PORT || 3000;
