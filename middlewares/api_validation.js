@@ -11,8 +11,6 @@ module.exports = {
       // API key is invalid
       return res.status(401).json({
         error: "Invalid API key",
-        data: req.body,
-        file_api_key: process.env.API_KEY,
       });
     }
   },
