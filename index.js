@@ -7,7 +7,7 @@ app.use(express.json());
 const userRouter = require("./api/users/user.router");
 app.use("/users", userRouter);
 app.get("/", (req, res) => {
-  res.send("ISLAag Backend");
+  res.send("ISLAagan Backend");
 });
 
 const port = process.env.APP_PORT || 3000;
