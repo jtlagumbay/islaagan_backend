@@ -35,6 +35,25 @@ module.exports = {
       }
     );
   },
+  getUserByEmail: (email, callback) => {
+    pool.query(
+      `
+      SELECT * FROM users WHERE email_address=?;
+      `,
+      [email],
+      (error, results, fields) => {
+        if (error) {
+          return callback(error);
+        }
+        // console.log(results);
+        results = results.map((row) => {
+          row.bdate = row.bdate.toISOString().split("T")[0];
+          return row;
+        });
+        return callback(null, results[0]);
+      }
+    );
+  },
   updateUserById: (data, callback) => {
     pool.query(
       `

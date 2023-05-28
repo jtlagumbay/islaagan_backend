@@ -3,6 +3,7 @@ const {
   getUserById,
   updateUserById,
   deleteUserById,
+  getUserByEmail,
 } = require("./user.service");
 
 const { genSalt, hash, compareSync } = require("bcrypt");
@@ -73,7 +74,7 @@ module.exports = {
             error: err,
           });
       }
-      if (!results) {
+      if (results.length < 1) {
         return res.json({
           success: 0,
           message: "User not found",
@@ -83,6 +84,50 @@ module.exports = {
         success: 1,
         data: results[0],
       });
+    });
+  },
+  login: (req, res) => {
+    const body = req.body;
+    const email = req.body.email_address;
+    console.log(body);
+    getUserByEmail(email, (err, results) => {
+      console.log(results);
+      if (err) {
+        console.log(err);
+        if (err.errno == -4078) {
+          return res.status(500).json({
+            success: 0,
+            error: "Database connection error",
+          });
+        } else
+          return res.status(400).json({
+            success: 0,
+            error: err,
+          });
+      }
+      if (results.length < 1) {
+        return res.json({
+          success: 0,
+          message: "User does not exist.",
+        });
+      }
+      const checkPassword = compareSync(body.password, results.password);
+      if (checkPassword) {
+        results.password = undefined;
+        const jsonwebtoken = sign({ results: results }, process.env.JWT_KEY, {
+          expiresIn: "3h",
+        });
+        return res.json({
+          success: 1,
+          message: "Login successful.",
+          user_id: results.user_id,
+          token: jsonwebtoken,
+        });
+      } else
+        return res.json({
+          success: 0,
+          message: "Invalid email address or password.",
+        });
     });
   },
   updateUserById: (req, res) => {
