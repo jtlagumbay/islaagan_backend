@@ -1,7 +1,9 @@
+
 const {
   getAllDestinations,
   getDestinationById,
 } = require("./destination.service");
+
 module.exports = {
   getAllDestinations: (req, res) => {
     getAllDestinations(req, (err, results) => {
@@ -24,6 +26,7 @@ module.exports = {
       });
     });
   },
+
   getDestinationById: (req, res) => {
     const id = req.body.dest_id;
     getDestinationById(id, (err, results) => {
@@ -52,4 +55,5 @@ module.exports = {
       });
     });
   },
+
 };

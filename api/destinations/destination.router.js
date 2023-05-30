@@ -2,7 +2,7 @@ const express = require("express");
 const {
   getAllDestinations,
   getDestinationById,
-} = require("./destination.controller");
+} = require("./destination.controller");ain
 
 const router = express.Router();
 
