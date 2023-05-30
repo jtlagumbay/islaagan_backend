@@ -9,9 +9,10 @@ const userRouter = require("./api/users/user.router");
 const destinationRouter = require("./api/destinations/destination.router");
 
 app.get("/", (req, res) => {
-  res.send("ISLAagan Backend");
+  res.send("ISLAagan Backend 1");
 });
-app.use("/images", express.static(__dirname + "/public/images"));
+app.use(express.static("public"));
+
 app.use("/users", checkAPI, userRouter);
 app.use("/destinations", checkAPI, destinationRouter);
 
