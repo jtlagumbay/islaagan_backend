@@ -11,7 +11,7 @@ const destinationRouter = require("./api/destinations/destination.router");
 app.get("/", (req, res) => {
   res.send("ISLAagan Backend");
 });
-app.use("/images", express.static("uploads/images"));
+app.use("/images", express.static(__dirname + "/public/images"));
 app.use("/users", checkAPI, userRouter);
 app.use("/destinations", checkAPI, destinationRouter);
 
