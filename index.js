@@ -11,13 +11,7 @@ const destinationRouter = require("./api/destinations/destination.router");
 app.get("/", (req, res) => {
   res.send("ISLAagan Backend");
 });
-
-app.get("/image/:filename", (req, res) => {
-  const { filename } = req.params;
-  const imagePath = `${process.env.FILE_PATH}/uploads/images/${filename}`;
-
-  res.sendFile(imagePath);
-});
+app.use("/images", express.static("uploads/images"));
 app.use("/users", checkAPI, userRouter);
 app.use("/destinations", checkAPI, destinationRouter);
 
