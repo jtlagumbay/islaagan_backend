@@ -10,10 +10,10 @@ const userRouter = require("./api/users/user.router");
 const destinationRouter = require("./api/destinations/destination.router");
 
 app.get("/", (req, res) => {
-  res.send("ISLAagan Backend 1");
+  res.send("ISLAagan Backend 2");
 });
 // app.use(express.static("public"));
-app.use("/static", express.static(path.join(__dirname, "public")));
+app.use("/images", express.static(path.join(__dirname, "uploads/images")));
 app.use("/users", checkAPI, userRouter);
 app.use("/destinations", checkAPI, destinationRouter);
 
