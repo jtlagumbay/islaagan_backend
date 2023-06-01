@@ -19,7 +19,7 @@ module.exports = {
         console.error(err);
         return res.status(500).json({
           success: 0,
-          message: "Error generating salt",
+          message: "Error generating salt.",
         });
       }
 
@@ -28,7 +28,7 @@ module.exports = {
           console.error(err);
           return res.status(500).json({
             success: 0,
-            message: "Error hashing password",
+            message: "Error hashing password.",
           });
         }
 
@@ -37,11 +37,11 @@ module.exports = {
 
         create(body, (err, results) => {
           if (err) {
-            console.error(err);
+            // console.error(err);
             if (err.errno == -4078) {
               return res.status(500).json({
                 success: 0,
-                error: "Database connection error",
+                error: "Database connection error.",
               });
             } else
               return res.status(400).json({
@@ -60,13 +60,13 @@ module.exports = {
   getUserById: (req, res) => {
     const id = req.body.user_id;
     getUserById(id, (err, results) => {
-      console.log(results);
+      // console.log(results);
       if (err) {
-        console.log(err);
+        // console.log(err);
         if (err.errno == -4078) {
           return res.status(500).json({
             success: 0,
-            error: "Database connection error",
+            error: "Database connection error.",
           });
         } else
           return res.status(400).json({
@@ -77,7 +77,7 @@ module.exports = {
       if (results.length < 1) {
         return res.json({
           success: 0,
-          message: "User not found",
+          message: "User not found.",
         });
       }
       return res.json({
@@ -89,11 +89,11 @@ module.exports = {
   login: (req, res) => {
     const body = req.body;
     const email = req.body.email_address;
-    console.log(body);
+    // console.log(body);
     getUserByEmail(email, (err, results) => {
       console.log(results);
       if (err) {
-        console.log(err);
+        // console.log(err);
         if (err.errno == -4078) {
           return res.status(500).json({
             success: 0,
@@ -136,19 +136,19 @@ module.exports = {
 
     genSalt(saltRounds, (err, salt) => {
       if (err) {
-        console.error(err);
+        // console.error(err);
         return res.status(500).json({
           success: 0,
-          message: "Error generating salt",
+          message: "Error generating salt.",
         });
       }
 
       hash(body.password, salt, (err, hashedPassword) => {
         if (err) {
-          console.error(err);
+          // console.error(err);
           return res.status(500).json({
             success: 0,
-            message: "Error hashing password",
+            message: "Error hashing password.",
           });
         }
 
@@ -156,13 +156,13 @@ module.exports = {
         body.password = hashedPassword;
 
         updateUserById(body, (err, results) => {
-          console.log(results);
+          // console.log(results);
           if (err) {
-            console.error(err);
+            // console.error(err);
             if (err.errno == -4078) {
               return res.status(500).json({
                 success: 0,
-                error: "Database connection error",
+                error: "Database connection error.",
               });
             } else
               return res.status(400).json({
@@ -171,15 +171,15 @@ module.exports = {
               });
           }
           if (results.affectedRows != 1) {
-            console.error(err);
+            // console.error(err);
             return res.status(400).json({
               success: 0,
-              message: "User not found",
+              message: "User not found.",
             });
           }
           return res.status(200).json({
             success: 1,
-            message: "User updated successfully",
+            message: "User updated successfully.",
           });
         });
       });
@@ -190,7 +190,7 @@ module.exports = {
 
     deleteUserById(id, (err, results) => {
       if (err) {
-        console.error(err);
+        // console.error(err);
         if (err.errno == -4078) {
           return res.status(500).json({
             success: 0,
@@ -203,7 +203,7 @@ module.exports = {
           });
       }
       if (results.affectedRows != 1) {
-        console.error(err);
+        // console.error(err);
         return res.status(400).json({
           success: 0,
           message: "User not found",

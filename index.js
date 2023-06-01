@@ -11,6 +11,7 @@ const destinationRouter = require("./api/destinations/destination.router");
 const restaurantRouter = require("./api/restaurants/restaurant.router");
 const accommodationRouter = require("./api/accommodations/accommodation.router");
 const aquaticRouter = require("./api/aquatics/aquatic.router");
+const itinerariesRouter = require("./api/itineraries/itinerary.router");
 
 app.get("/", (req, res) => {
   res.send("ISLAagan Backend 2");
@@ -23,6 +24,7 @@ app.use("/destinations", checkAPI, destinationRouter);
 app.use("/restaurants", checkAPI, restaurantRouter);
 app.use("/accommodations", checkAPI, accommodationRouter);
 app.use("/aquatics", checkAPI, aquaticRouter);
+app.use("/itineraries", checkAPI, itinerariesRouter);
 
 const port = process.env.APP_PORT || 3000;
 
