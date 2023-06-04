@@ -1,17 +1,16 @@
 const {
-  createItinerary,
-  getItineraryById,
-  getItinerariesByUserId,
-  updateItinerary,
-  deleteItinerary,
-} = require("./itinerary.service");
+  createItAccommodation,
+  getItAccommodationById,
+  getItAccommodationByItId,
+  updateItAccommodation,
+  deleteItAccommodation,
+} = require("./itAccommodation.service");
 
 module.exports = {
-  createItinerary: (req, res) => {
+  createItAccommodation: (req, res) => {
     const body = req.body;
-    createItinerary(body, (err, results) => {
+    createItAccommodation(body, (err, results) => {
       if (err) {
-        // console.error(esrr);
         if (err.errno == -4078) {
           return res.status(500).json({
             success: 0,
@@ -29,17 +28,41 @@ module.exports = {
       });
     });
   },
-  getItineraryById: (req, res) => {
-    const id = req.body.it_id;
-    // console.log(req.body);
-    getItineraryById(id, (err, results) => {
-      // console.log(results);
+  getItAccommodationById: (req, res) => {
+    const id = req.body.it_acco_id;
+    getItAccommodationById(id, (err, results) => {
       if (err) {
-        console.log(err);
         if (err.errno == -4078) {
           return res.status(500).json({
             success: 0,
-            error: "Database connection error.",
+            error: "Database connection error",
+          });
+        } else
+          return res.status(400).json({
+            success: 0,
+            error: err,
+          });
+      }
+      if (results.length < 1) {
+        return res.json({
+          success: 0,
+          message: "Itinerary accommodation not found.",
+        });
+      }
+      return res.json({
+        success: 1,
+        data: results[0],
+      });
+    });
+  },
+  getItAccommodationByItId: (req, res) => {
+    const id = req.body.it_id;
+    getItAccommodationByItId(id, (err, results) => {
+      if (err) {
+        if (err.errno == -4078) {
+          return res.status(500).json({
+            success: 0,
+            error: "Database connection error",
           });
         } else
           return res.status(400).json({
@@ -55,42 +78,13 @@ module.exports = {
       }
       return res.json({
         success: 1,
-        data: results[0],
-      });
-    });
-  },
-  getItinerariesByUserId: (req, res) => {
-    const id = req.body.user_id;
-    getItinerariesByUserId(id, (err, results) => {
-      // console.log(results);
-      if (err) {
-        // console.log(err);
-        if (err.errno == -4078) {
-          return res.status(500).json({
-            success: 0,
-            error: "Database connection error.",
-          });
-        } else
-          return res.status(400).json({
-            success: 0,
-            error: err,
-          });
-      }
-      if (results.length < 1) {
-        return res.json({
-          success: 0,
-          message: "Itineraries not found.",
-        });
-      }
-      return res.json({
-        success: 1,
         data: results,
       });
     });
   },
-  updateItinerary: (req, res) => {
+  updateItAccommodation: (req, res) => {
     const data = req.body;
-    updateItinerary(data, (err, results) => {
+    updateItAccommodation(data, (err, results) => {
       if (err) {
         if (err.errno == -4078) {
           return res.status(500).json({
@@ -106,18 +100,18 @@ module.exports = {
       if (results.affectedRows != 1) {
         return res.status(400).json({
           success: 0,
-          message: "Itinerary not found.",
+          message: "Itinerary accommodation not found.",
         });
       }
       return res.json({
         success: 1,
-        message: "Itinerary updated successfully.",
+        message: "Itinerary accommodation updated successfully.",
       });
     });
   },
-  deleteItinerary: (req, res) => {
-    const id = req.body.it_id;
-    deleteItinerary(id, (err, results) => {
+  deleteItAccommodation: (req, res) => {
+    const id = req.body.it_acco_id;
+    deleteItAccommodation(id, (err, results) => {
       if (err) {
         if (err.errno == -4078) {
           return res.status(500).json({
@@ -133,12 +127,12 @@ module.exports = {
       if (results.affectedRows != 1) {
         return res.status(400).json({
           success: 0,
-          message: "Itinerary not found.",
+          message: "Itinerary accommodation not found.",
         });
       }
       return res.json({
         success: 1,
-        message: "Itinerary deleted successfully.",
+        message: "Itinerary accommodation deleted successfully.",
       });
     });
   },

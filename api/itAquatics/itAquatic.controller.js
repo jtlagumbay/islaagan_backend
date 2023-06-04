@@ -1,17 +1,16 @@
 const {
-  createItinerary,
-  getItineraryById,
-  getItinerariesByUserId,
-  updateItinerary,
-  deleteItinerary,
-} = require("./itinerary.service");
+  createItAquatic,
+  getItAquaticById,
+  getItAquaticByItId,
+  updateItAquatic,
+  deleteItAquatic,
+} = require("./itAquatic.service");
 
 module.exports = {
-  createItinerary: (req, res) => {
+  createItAquatic: (req, res) => {
     const body = req.body;
-    createItinerary(body, (err, results) => {
+    createItAquatic(body, (err, results) => {
       if (err) {
-        // console.error(esrr);
         if (err.errno == -4078) {
           return res.status(500).json({
             success: 0,
@@ -29,17 +28,41 @@ module.exports = {
       });
     });
   },
-  getItineraryById: (req, res) => {
-    const id = req.body.it_id;
-    // console.log(req.body);
-    getItineraryById(id, (err, results) => {
-      // console.log(results);
+  getItAquaticById: (req, res) => {
+    const id = req.body.it_aqua_id;
+    getItAquaticById(id, (err, results) => {
       if (err) {
-        console.log(err);
         if (err.errno == -4078) {
           return res.status(500).json({
             success: 0,
-            error: "Database connection error.",
+            error: "Database connection error",
+          });
+        } else
+          return res.status(400).json({
+            success: 0,
+            error: err,
+          });
+      }
+      if (results.length < 1) {
+        return res.json({
+          success: 0,
+          message: "Itinerary aquatic retreat not found.",
+        });
+      }
+      return res.json({
+        success: 1,
+        data: results[0],
+      });
+    });
+  },
+  getItAquaticByItId: (req, res) => {
+    const id = req.body.it_id;
+    getItAquaticByItId(id, (err, results) => {
+      if (err) {
+        if (err.errno == -4078) {
+          return res.status(500).json({
+            success: 0,
+            error: "Database connection error",
           });
         } else
           return res.status(400).json({
@@ -55,42 +78,13 @@ module.exports = {
       }
       return res.json({
         success: 1,
-        data: results[0],
-      });
-    });
-  },
-  getItinerariesByUserId: (req, res) => {
-    const id = req.body.user_id;
-    getItinerariesByUserId(id, (err, results) => {
-      // console.log(results);
-      if (err) {
-        // console.log(err);
-        if (err.errno == -4078) {
-          return res.status(500).json({
-            success: 0,
-            error: "Database connection error.",
-          });
-        } else
-          return res.status(400).json({
-            success: 0,
-            error: err,
-          });
-      }
-      if (results.length < 1) {
-        return res.json({
-          success: 0,
-          message: "Itineraries not found.",
-        });
-      }
-      return res.json({
-        success: 1,
         data: results,
       });
     });
   },
-  updateItinerary: (req, res) => {
+  updateItAquatic: (req, res) => {
     const data = req.body;
-    updateItinerary(data, (err, results) => {
+    updateItAquatic(data, (err, results) => {
       if (err) {
         if (err.errno == -4078) {
           return res.status(500).json({
@@ -106,18 +100,18 @@ module.exports = {
       if (results.affectedRows != 1) {
         return res.status(400).json({
           success: 0,
-          message: "Itinerary not found.",
+          message: "Itinerary aquatic retreat not found.",
         });
       }
       return res.json({
         success: 1,
-        message: "Itinerary updated successfully.",
+        message: "Itinerary aquatic retreat updated successfully.",
       });
     });
   },
-  deleteItinerary: (req, res) => {
-    const id = req.body.it_id;
-    deleteItinerary(id, (err, results) => {
+  deleteItAquatic: (req, res) => {
+    const id = req.body.it_aqua_id;
+    deleteItAquatic(id, (err, results) => {
       if (err) {
         if (err.errno == -4078) {
           return res.status(500).json({
@@ -133,12 +127,12 @@ module.exports = {
       if (results.affectedRows != 1) {
         return res.status(400).json({
           success: 0,
-          message: "Itinerary not found.",
+          message: "Itinerary aquatic retreat not found.",
         });
       }
       return res.json({
         success: 1,
-        message: "Itinerary deleted successfully.",
+        message: "Itinerary aquatic retreat deleted successfully.",
       });
     });
   },
