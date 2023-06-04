@@ -7,10 +7,18 @@ module.exports = {
       token = token.slice(7);
       verify(token, process.env.JWT_KEY, (err, decoded) => {
         if (err) {
-          return res.json({
-            success: 0,
-            message: "Invalid token.",
-          });
+          console.log(err);
+          if (err.name == "TokenExpiredError") {
+            return res.json({
+              success: 0,
+              message: "Token expired.",
+            });
+          } else {
+            return res.json({
+              success: 0,
+              message: "Invalid Token.",
+            });
+          }
         } else {
           req.decoded = decoded;
           next();
