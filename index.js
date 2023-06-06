@@ -32,11 +32,7 @@ app.use("/itineraries", checkAPI, itinerariesRouter);
 app.use("/itRestaurants", checkAPI, itRestaurantRouter);
 app.use("/itAccommodations", checkAPI, itAccommodationRouter);
 app.use("/itAquatics", checkAPI, itAquaticRouter);
-app.use(
-  cors({
-    origin: ["http://localhost:3000"],
-  })
-);
+app.use(cors());
 
 const port = process.env.APP_PORT || 3000;
 
