@@ -74,6 +74,7 @@ module.exports = {
             error: err,
           });
       }
+
       if (results.length < 1) {
         return res.json({
           success: 0,
@@ -105,29 +106,30 @@ module.exports = {
             error: err,
           });
       }
-      if (results.length < 1) {
-        return res.json({
+      if (!results) {
+        return res.status(400).json({
           success: 0,
           message: "User does not exist.",
         });
+      } else {
+        const checkPassword = compareSync(body.password, results.password);
+        if (checkPassword) {
+          results.password = undefined;
+          const jsonwebtoken = sign({ results: results }, process.env.JWT_KEY, {
+            expiresIn: "3h",
+          });
+          return res.status(200).json({
+            success: 1,
+            message: "Login successful.",
+            user_id: results.user_id,
+            token: jsonwebtoken,
+          });
+        } else
+          return res.status(400).json({
+            success: 0,
+            message: "Invalid email address or password.",
+          });
       }
-      const checkPassword = compareSync(body.password, results.password);
-      if (checkPassword) {
-        results.password = undefined;
-        const jsonwebtoken = sign({ results: results }, process.env.JWT_KEY, {
-          expiresIn: "3h",
-        });
-        return res.json({
-          success: 1,
-          message: "Login successful.",
-          user_id: results.user_id,
-          token: jsonwebtoken,
-        });
-      } else
-        return res.json({
-          success: 0,
-          message: "Invalid email address or password.",
-        });
     });
   },
   updateUserById: (req, res) => {
