@@ -4,6 +4,7 @@ const express = require("express");
 const path = require("path");
 
 const app = express();
+const cors = require("cors");
 app.use(express.json());
 
 const userRouter = require("./api/users/user.router");
@@ -31,6 +32,11 @@ app.use("/itineraries", checkAPI, itinerariesRouter);
 app.use("/itRestaurants", checkAPI, itRestaurantRouter);
 app.use("/itAccommodations", checkAPI, itAccommodationRouter);
 app.use("/itAquatics", checkAPI, itAquaticRouter);
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+  })
+);
 
 const port = process.env.APP_PORT || 3000;
 
