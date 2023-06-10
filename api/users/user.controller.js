@@ -165,56 +165,87 @@ module.exports = {
     const body = req.body;
     const saltRounds = 10;
 
-    genSalt(saltRounds, (err, salt) => {
-      if (err) {
-        // console.error(err);
-        return res.status(500).json({
-          success: 0,
-          message: "Error generating salt.",
-        });
-      }
-
-      hash(body.password, salt, (err, hashedPassword) => {
+    if (body.password != null) {
+      genSalt(saltRounds, (err, salt) => {
         if (err) {
           // console.error(err);
           return res.status(500).json({
             success: 0,
-            message: "Error hashing password.",
+            message: "Error generating salt.",
           });
         }
 
-        // Store the hashed password in the user object
-        body.password = hashedPassword;
-
-        updateUserById(body, (err, results) => {
-          // console.log(results);
+        hash(body.password, salt, (err, hashedPassword) => {
           if (err) {
             // console.error(err);
-            if (err.errno == -4078) {
-              return res.status(500).json({
-                success: 0,
-                error: "Database connection error.",
-              });
-            } else
-              return res.status(400).json({
-                success: 0,
-                error: err,
-              });
-          }
-          if (results.affectedRows != 1) {
-            // console.error(err);
-            return res.status(400).json({
+            return res.status(500).json({
               success: 0,
-              message: "User not found.",
+              message: "Error hashing password.",
             });
           }
-          return res.status(200).json({
-            success: 1,
-            message: "User updated successfully.",
+
+          // Store the hashed password in the user object
+          body.password = hashedPassword;
+
+          updateUserById(body, true, (err, results) => {
+            // console.log(results);
+            if (err) {
+              // console.error(err);
+              if (err.errno == -4078) {
+                return res.status(500).json({
+                  success: 0,
+                  error: "Database connection error.",
+                });
+              } else
+                return res.status(400).json({
+                  success: 0,
+                  error: err,
+                });
+            }
+            if (results.affectedRows != 1) {
+              // console.error(err);
+              return res.status(400).json({
+                success: 0,
+                message: "User not found.",
+                error: err,
+              });
+            }
+            return res.status(200).json({
+              success: 1,
+              message: "User updated successfully.",
+            });
           });
         });
       });
-    });
+    } else {
+      updateUserById(body, false, (err, results) => {
+        // console.log(results);
+        if (err) {
+          // console.error(err);
+          if (err.errno == -4078) {
+            return res.status(500).json({
+              success: 0,
+              error: "Database connection error.",
+            });
+          } else
+            return res.status(400).json({
+              success: 0,
+              error: err,
+            });
+        }
+        if (results.affectedRows != 1) {
+          // console.error(err);
+          return res.status(400).json({
+            success: 0,
+            message: "User not found.",
+          });
+        }
+        return res.status(200).json({
+          success: 1,
+          message: "User updated successfully.",
+        });
+      });
+    }
   },
   deleteUserById: (req, res) => {
     const id = req.body.user_id;
