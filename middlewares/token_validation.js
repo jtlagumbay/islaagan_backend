@@ -9,12 +9,12 @@ module.exports = {
         if (err) {
           console.log(err);
           if (err.name == "TokenExpiredError") {
-            return res.json({
+            return res.status(500).json({
               success: 0,
               message: "Token expired.",
             });
           } else {
-            return res.json({
+            return res.status(500).json({
               success: 0,
               message: "Invalid Token.",
             });
@@ -25,7 +25,7 @@ module.exports = {
         }
       });
     } else {
-      return res.json({
+      return res.status(500).json({
         success: 0,
         message: "Access denied! Unauthorized user",
       });

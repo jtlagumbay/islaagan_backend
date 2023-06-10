@@ -43,7 +43,7 @@ module.exports = {
           });
       }
       if (results.length < 1) {
-        return res.json({
+        return res.status(400).json({
           success: 0,
           message: "Restaurant not found",
         });
@@ -71,7 +71,7 @@ module.exports = {
           });
       }
       if (results.length < 1) {
-        return res.json({
+        return res.status(400).json({
           success: 0,
           message: "No restaurant found in destination.",
         });
