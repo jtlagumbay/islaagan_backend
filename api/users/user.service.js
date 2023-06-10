@@ -35,6 +35,21 @@ module.exports = {
       }
     );
   },
+  getUserNamesById: (id, callback) => {
+    pool.query(
+      `
+      SELECT fname, lname FROM users WHERE user_id=? AND is_deleted=0;
+      `,
+      [id],
+      (error, results, fields) => {
+        if (error) {
+          return callback(error);
+        }
+
+        return callback(null, results);
+      }
+    );
+  },
   getUserByEmail: (email, callback) => {
     pool.query(
       `
