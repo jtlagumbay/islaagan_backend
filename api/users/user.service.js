@@ -69,28 +69,32 @@ module.exports = {
       }
     );
   },
-  updateUserById: (data, callback) => {
-    pool.query(
-      `
-      UPDATE users
-      SET email_address=?, password=?, fname=?, lname=?, bdate=?
-      WHERE user_id=? AND is_deleted=0;
-      `,
-      [
-        data.email_address,
-        data.password,
-        data.fname,
-        data.lname,
-        data.bdate,
-        data.user_id,
-      ],
-      (error, results, fields) => {
-        if (error) {
-          return callback(error);
-        }
-        return callback(null, results);
+  updateUserById: (data, withPassword, callback) => {
+    const details = withPassword
+      ? [
+          data.email_address,
+          data.password,
+          data.fname,
+          data.lname,
+          data.bdate,
+          data.user_id,
+        ]
+      : [data.email_address, data.fname, data.lname, data.bdate, data.user_id];
+    const query = withPassword
+      ? `UPDATE users
+      SET email_address=?,password=?
+      , fname=?, lname=?, bdate=?
+      WHERE user_id=? AND is_deleted=0;`
+      : `UPDATE users
+      SET email_address=?, fname=?, lname=?, bdate=?
+      WHERE user_id=? AND is_deleted=0;`;
+
+    pool.query(query, details, (error, results, fields) => {
+      if (error) {
+        return callback(error);
       }
-    );
+      return callback(null, results);
+    });
   },
   deleteUserById: (id, callback) => {
     const dateNow = new Date();
