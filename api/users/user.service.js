@@ -19,7 +19,7 @@ module.exports = {
   getUserById: (id, callback) => {
     pool.query(
       `
-      SELECT * FROM users WHERE user_id=?;
+      SELECT * FROM users WHERE user_id=? AND is_deleted=0;
       `,
       [id],
       (error, results, fields) => {
@@ -38,7 +38,7 @@ module.exports = {
   getUserByEmail: (email, callback) => {
     pool.query(
       `
-      SELECT * FROM users WHERE email_address=?;
+      SELECT * FROM users WHERE email_address=? AND is_deleted=0;
       `,
       [email],
       (error, results, fields) => {
@@ -59,7 +59,7 @@ module.exports = {
       `
       UPDATE users
       SET email_address=?, password=?, fname=?, lname=?, bdate=?
-      WHERE user_id=?;
+      WHERE user_id=? AND is_deleted=0;
       `,
       [
         data.email_address,
@@ -78,11 +78,13 @@ module.exports = {
     );
   },
   deleteUserById: (id, callback) => {
+    const dateNow = new Date();
     pool.query(
       `
-      DELETE FROM users where user_id=?;
-      `,
-      [id],
+      UPDATE users
+      SET is_deleted=1, deleted_on=?
+      WHERE user_id=?      `,
+      [dateNow, id],
       (error, results, fields) => {
         if (error) {
           return callback(error);

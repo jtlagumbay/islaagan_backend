@@ -119,7 +119,7 @@ module.exports = {
       `
       UPDATE itAccommodations
       SET ?
-      WHERE it_acco_id=?;
+      WHERE it_acco_id=? AND is_deleted=0;
     `,
       [itAccommodation, data.it_acco_id],
       (error, results, fields) => {
@@ -136,7 +136,7 @@ module.exports = {
       `
       UPDATE itAccommodations
       SET is_deleted=1, deleted_on=?
-      WHERE it_acco_id=?;
+      WHERE it_acco_id=? AND is_deleted=0;
       `,
       [dateNow, id],
       (error, results, fields) => {

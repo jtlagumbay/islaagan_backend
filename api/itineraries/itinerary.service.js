@@ -64,7 +64,7 @@ module.exports = {
   getItinerariesByUserId: (id, callback) => {
     pool.query(
       `
-      SELECT * FROM itineraries WHERE user_id=? AND is_deleted!=1;
+      SELECT * FROM itineraries WHERE user_id=? AND is_deleted=0;
       `,
       [id],
       (error, results, fields) => {
@@ -112,7 +112,7 @@ module.exports = {
       `
         UPDATE itineraries
         SET ?
-        WHERE it_id=?;
+        WHERE it_id=? AND is_deleted=0;
       `,
       [itinerary, data.it_id],
       (error, results, fields) => {
@@ -129,7 +129,7 @@ module.exports = {
       `
       UPDATE itineraries
       SET is_deleted=1, deleted_on=?
-      WHERE it_id=?;
+      WHERE it_id=? AND is_deleted=0;
       `,
       [dateNow, id],
       (error, results, fields) => {

@@ -119,7 +119,7 @@ module.exports = {
       `
       UPDATE itAquatics
       SET ?
-      WHERE it_aqua_id=?;
+      WHERE it_aqua_id=? AND is_deleted=0;
     `,
       [itAquatic, data.it_aqua_id],
       (error, results, fields) => {
@@ -136,7 +136,7 @@ module.exports = {
       `
       UPDATE itAquatics
       SET is_deleted=1, deleted_on=?
-      WHERE it_aqua_id=?;
+      WHERE it_aqua_id=? AND is_deleted=0;
       `,
       [dateNow, id],
       (error, results, fields) => {
