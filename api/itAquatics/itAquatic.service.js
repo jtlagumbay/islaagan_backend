@@ -67,9 +67,10 @@ module.exports = {
   getItAquaticByItId: (id, callback) => {
     pool.query(
       `
-      SELECT * FROM itAquatics 
-      WHERE it_id=? AND is_deleted=0
-      ORDER BY start_datetime;
+      SELECT r.name, i.*
+      FROM itAquatics i INNER JOIN aquatics r ON i.aqua_id=r.aqua_id
+      WHERE it_id=? AND i.is_deleted=0
+      ORDER BY start_datetime
       `,
       [id],
       (error, results, fields) => {

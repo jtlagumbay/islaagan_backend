@@ -67,9 +67,10 @@ module.exports = {
   getItRestaurantByItId: (id, callback) => {
     pool.query(
       `
-      SELECT * FROM itRestaurants 
-      WHERE it_id=? AND is_deleted=0
-      ORDER BY start_datetime;
+      SELECT r.name, i.*
+      FROM itRestaurants i INNER JOIN restaurants r ON i.rest_id=r.rest_id
+          WHERE it_id=? AND i.is_deleted=0
+          ORDER BY start_datetime
       `,
       [id],
       (error, results, fields) => {
