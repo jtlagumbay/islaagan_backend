@@ -1,4 +1,3 @@
-
 const {
   getAllDestinations,
   getDestinationById,
@@ -44,7 +43,7 @@ module.exports = {
           });
       }
       if (results.length < 1) {
-        return res.json({
+        return res.status(400).json({
           success: 0,
           message: "Destination not found",
         });
@@ -55,5 +54,4 @@ module.exports = {
       });
     });
   },
-
 };

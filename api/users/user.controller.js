@@ -76,12 +76,12 @@ module.exports = {
       }
 
       if (results.length < 1) {
-        return res.json({
+        return res.status(400).json({
           success: 0,
           message: "User not found.",
         });
       }
-      return res.json({
+      return res.status(200).json({
         success: 1,
         data: results[0],
       });
