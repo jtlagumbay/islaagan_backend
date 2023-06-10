@@ -47,7 +47,7 @@ app.use("/itRestaurants", checkAPI, itRestaurantRouter);
 app.use("/itAccommodations", checkAPI, itAccommodationRouter);
 app.use("/itAquatics", checkAPI, itAquaticRouter);
 
-const port = process.env.APP_PORT || 3000;
+const port = process.env.APP_PORT || 3001;
 
 app.listen(port, () => {
   console.log("server 3000 running");

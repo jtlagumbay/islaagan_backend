@@ -119,7 +119,7 @@ module.exports = {
       `
       UPDATE itRestaurants
       SET ?
-      WHERE it_rest_id=?;
+      WHERE it_rest_id=? AND is_deleted=0;
     `,
       [itRestaurant, data.it_rest_id],
       (error, results, fields) => {
@@ -136,7 +136,7 @@ module.exports = {
       `
       UPDATE itRestaurants
       SET is_deleted=1, deleted_on=?
-      WHERE it_rest_id=?;
+      WHERE it_rest_id=? AND is_deleted=0;
       `,
       [dateNow, id],
       (error, results, fields) => {
