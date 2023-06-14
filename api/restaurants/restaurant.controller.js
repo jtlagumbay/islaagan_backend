@@ -1,3 +1,4 @@
+const { getImagesName } = require("../images/images.service");
 const {
   getAllRestaurants,
   getRestaurantById,

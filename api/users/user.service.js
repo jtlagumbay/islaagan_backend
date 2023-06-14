@@ -26,7 +26,6 @@ module.exports = {
         if (error) {
           return callback(error);
         }
-        console.log(results);
         results = results.map((row) => {
           row.bdate = row.bdate.toISOString().split("T")[0];
           return row;
@@ -60,7 +59,6 @@ module.exports = {
         if (error) {
           return callback(error);
         }
-        // console.log(results);
         results = results.map((row) => {
           row.bdate = row.bdate.toISOString().split("T")[0];
           return row;
@@ -70,31 +68,48 @@ module.exports = {
     );
   },
   updateUserById: (data, withPassword, callback) => {
-    const details = withPassword
-      ? [
-          data.email_address,
-          data.password,
-          data.fname,
-          data.lname,
-          data.bdate,
-          data.user_id,
-        ]
-      : [data.email_address, data.fname, data.lname, data.bdate, data.user_id];
-    const query = withPassword
-      ? `UPDATE users
-      SET email_address=?,password=?
-      , fname=?, lname=?, bdate=?
-      WHERE user_id=? AND is_deleted=0;`
-      : `UPDATE users
-      SET email_address=?, fname=?, lname=?, bdate=?
-      WHERE user_id=? AND is_deleted=0;`;
+    const { password, email_address, fname, lname, bdate, user_id } = data;
+    // const details = withPassword
+    //   ? [
+    //       data.email_address,
+    //       data.password,
+    //       data.fname,
+    //       data.lname,
+    //       data.bdate,
+    //       data.user_id,
+    //     ]
+    //   : [data.email_address, data.fname, data.lname, data.bdate, data.user_id];
+    // const query = withPassword
+    //   ? `UPDATE users
+    //   SET email_address=?,password=?
+    //   , fname=?, lname=?, bdate=?
+    //   WHERE user_id=? AND is_deleted=0;`
+    //   : `UPDATE users
+    //   SET email_address=?, fname=?, lname=?, bdate=?
+    //   WHERE user_id=? AND is_deleted=0;`;
 
-    pool.query(query, details, (error, results, fields) => {
-      if (error) {
-        return callback(error);
+    let updateQuery = `UPDATE users
+      SET ?
+      WHERE user_id=? AND is_deleted=0;`;
+    let newUserData = {
+      email_address: email_address,
+      fname: fname,
+      lname: lname,
+      bdate: bdate,
+    };
+    if (password) {
+      newUserData.password = password;
+    }
+    pool.query(
+      updateQuery,
+      [newUserData, user_id],
+      (error, results, fields) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
       }
-      return callback(null, results);
-    });
+    );
   },
   deleteUserById: (id, callback) => {
     const dateNow = new Date();

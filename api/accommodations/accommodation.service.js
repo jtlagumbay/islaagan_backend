@@ -4,7 +4,12 @@ module.exports = {
   getAllAccommodations: (data, callback) => {
     pool.query(
       `
-      SELECT * FROM accommodations;
+        SELECT *, ( 
+          SELECT image_name FROM images 
+          WHERE category = 'acco' AND category_id=a.acco_id
+          LIMIT 1 
+        ) as "image_name" 
+        FROM accommodations a
       `,
       (error, results, fields) => {
         if (error) {
@@ -15,11 +20,16 @@ module.exports = {
     );
   },
   getAccommodationById: (id, callback) => {
+    // SELECT * FROM accommodations WHERE acco_id=?;
+
     pool.query(
       `
-      SELECT * FROM accommodations WHERE acco_id=?;
+      SELECT *, ( 
+        SELECT image_name FROM images WHERE category = 'acco' AND category_id=? LIMIT 1 
+        ) as "image_name" 
+      FROM accommodations WHERE acco_id=?
       `,
-      [id],
+      [id, id],
       (error, results, fields) => {
         if (error) {
           return callback(error);
@@ -31,7 +41,12 @@ module.exports = {
   getAccommodationByDestId: (accoId, callback) => {
     pool.query(
       `
-      SELECT * FROM accommodations WHERE dest_id=?;
+       SELECT *, ( 
+          SELECT image_name FROM images 
+          WHERE category = 'acco' AND category_id=a.acco_id
+          LIMIT 1 
+        ) as "image_name" 
+        FROM accommodations a WHERE dest_id=?;
       `,
       [accoId],
       (error, results, fields) => {
