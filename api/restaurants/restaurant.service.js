@@ -4,7 +4,12 @@ module.exports = {
   getAllRestaurants: (data, callback) => {
     pool.query(
       `
-      SELECT * FROM restaurants;
+        SELECT *, ( 
+          SELECT image_name FROM images 
+          WHERE category = 'rest' AND category_id=r.rest_id 
+          LIMIT 1 
+        ) as "image_name" 
+        FROM restaurants r
       `,
       (error, results, fields) => {
         if (error) {
@@ -17,9 +22,12 @@ module.exports = {
   getRestaurantById: (id, callback) => {
     pool.query(
       `
-      SELECT * FROM restaurants WHERE rest_id=?;
+      SELECT *, ( 
+        SELECT image_name FROM images WHERE category = 'rest' AND category_id=? LIMIT 1 
+        ) as "image_name" 
+      FROM restaurants WHERE rest_id=?
       `,
-      [id],
+      [id, id],
       (error, results, fields) => {
         if (error) {
           return callback(error);
@@ -31,7 +39,13 @@ module.exports = {
   getRestaurantByDestId: (destId, callback) => {
     pool.query(
       `
-      SELECT * FROM restaurants WHERE dest_id=?;
+        SELECT *, ( 
+          SELECT image_name FROM images 
+          WHERE category = 'rest' AND category_id=r.rest_id 
+          LIMIT 1 
+        ) as "image_name" 
+        FROM restaurants r 
+        WHERE r.dest_id=?
       `,
       [destId],
       (error, results, fields) => {
