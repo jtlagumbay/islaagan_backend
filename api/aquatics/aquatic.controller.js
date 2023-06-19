@@ -48,6 +48,10 @@ module.exports = {
           message: "Aquatic retreat not found",
         });
       }
+      results[0].image_names = results[0].image_names
+        .split(",")
+        .map((image) => image.trim());
+
       return res.status(200).json({
         success: 1,
         data: results[0],
