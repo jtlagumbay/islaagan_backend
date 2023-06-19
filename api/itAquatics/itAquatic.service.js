@@ -32,34 +32,34 @@ module.exports = {
         if (error) {
           return callback(error);
         }
-        results = results.map((row) => {
-          row.start_datetime = row.start_datetime
-            ? moment(row.start_datetime)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          row.end_datetime = row.end_datetime
-            ? moment(row.end_datetime)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          row.added_on = row.added_on
-            ? moment(row.added_on)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          row.updated_on = row.updated_on
-            ? moment(row.updated_on)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          row.deleted_on = row.deleted_on
-            ? moment(row.deleted_on)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          return row;
-        });
+        // results = results.map((row) => {
+        //   row.start_datetime = row.start_datetime
+        //     ? moment(row.start_datetime)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   row.end_datetime = row.end_datetime
+        //     ? moment(row.end_datetime)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   row.added_on = row.added_on
+        //     ? moment(row.added_on)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   row.updated_on = row.updated_on
+        //     ? moment(row.updated_on)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   row.deleted_on = row.deleted_on
+        //     ? moment(row.deleted_on)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   return row;
+        // });
         return callback(null, results);
       }
     );
@@ -77,34 +77,34 @@ module.exports = {
         if (error) {
           return callback(error);
         }
-        results = results.map((row) => {
-          row.start_datetime = row.start_datetime
-            ? moment(row.start_datetime)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          row.end_datetime = row.end_datetime
-            ? moment(row.end_datetime)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          row.added_on = row.added_on
-            ? moment(row.added_on)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          row.updated_on = row.updated_on
-            ? moment(row.updated_on)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          row.deleted_on = row.deleted_on
-            ? moment(row.deleted_on)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          return row;
-        });
+        // results = results.map((row) => {
+        //   row.start_datetime = row.start_datetime
+        //     ? moment(row.start_datetime)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   row.end_datetime = row.end_datetime
+        //     ? moment(row.end_datetime)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   row.added_on = row.added_on
+        //     ? moment(row.added_on)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   row.updated_on = row.updated_on
+        //     ? moment(row.updated_on)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   row.deleted_on = row.deleted_on
+        //     ? moment(row.deleted_on)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   return row;
+        // });
         return callback(null, results);
       }
     );

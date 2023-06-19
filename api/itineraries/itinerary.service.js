@@ -32,31 +32,31 @@ module.exports = {
         if (error) {
           return callback(error);
         }
-        results = results.map((row) => {
-          row.start_date = row.start_date
-            ? row.start_date.toISOString().split("T")[0]
-            : null;
-          row.end_date = row.end_date
-            ? row.end_date.toISOString().split("T")[0]
-            : null;
+        // results = results.map((row) => {
+        //   row.start_date = row.start_date
+        //     ? row.start_date.toISOString().split("T")[0]
+        //     : null;
+        //   row.end_date = row.end_date
+        //     ? row.end_date.toISOString().split("T")[0]
+        //     : null;
 
-          row.added_on = row.added_on
-            ? moment(row.added_on)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          row.updated_on = row.updated_on
-            ? moment(row.updated_on)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          row.deleted_on = row.deleted_on
-            ? moment(row.deleted_on)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          return row;
-        });
+        //   row.added_on = row.added_on
+        //     ? moment(row.added_on)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   row.updated_on = row.updated_on
+        //     ? moment(row.updated_on)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   row.deleted_on = row.deleted_on
+        //     ? moment(row.deleted_on)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   return row;
+        // });
         return callback(null, results);
       }
     );
@@ -71,31 +71,31 @@ module.exports = {
         if (error) {
           return callback(error);
         }
-        results = results.map((row) => {
-          row.start_date = row.start_date
-            ? row.start_date.toISOString().split("T")[0]
-            : null;
-          row.end_date = row.end_date
-            ? row.end_date.toISOString().split("T")[0]
-            : null;
+        // results = results.map((row) => {
+        //   row.start_date = row.start_date
+        //     ? row.start_date.toISOString().split("T")[0]
+        //     : null;
+        //   row.end_date = row.end_date
+        //     ? row.end_date.toISOString().split("T")[0]
+        //     : null;
 
-          row.added_on = row.added_on
-            ? moment(row.added_on)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          row.updated_on = row.updated_on
-            ? moment(row.updated_on)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          row.deleted_on = row.deleted_on
-            ? moment(row.deleted_on)
-                .tz("Asia/Manila")
-                .format("YYYY-MM-DD HH:mm:ss")
-            : null;
-          return row;
-        });
+        //   row.added_on = row.added_on
+        //     ? moment(row.added_on)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   row.updated_on = row.updated_on
+        //     ? moment(row.updated_on)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   row.deleted_on = row.deleted_on
+        //     ? moment(row.deleted_on)
+        //         .tz("Asia/Manila")
+        //         .format("YYYY-MM-DD HH:mm:ss")
+        //     : null;
+        //   return row;
+        // });
         return callback(null, results);
       }
     );
