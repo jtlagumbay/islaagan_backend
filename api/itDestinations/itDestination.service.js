@@ -2,18 +2,18 @@ const pool = require("../../config/database");
 const moment = require("moment-timezone");
 
 module.exports = {
-  createItRestaurant: (data, callback) => {
-    const itRestaurant = {
+  createItDestination: (data, callback) => {
+    const itDestination = {
       it_id: data.it_id,
-      rest_id: data.rest_id,
+      dest_id: data.dest_id,
       notes: data.notes,
       start_datetime: data.start_datetime,
       end_datetime: data.end_datetime,
       added_on: new Date(),
     };
     pool.query(
-      `INSERT INTO itRestaurants SET ?`,
-      itRestaurant,
+      `INSERT INTO itDestinations SET ?`,
+      itDestination,
       (error, results, fields) => {
         if (error) {
           return callback(error, results);
@@ -22,10 +22,10 @@ module.exports = {
       }
     );
   },
-  getItRestaurantById: (id, callback) => {
+  getItDestinationById: (id, callback) => {
     pool.query(
       `
-      SELECT * FROM itRestaurants WHERE it_rest_id=? AND is_deleted=0;
+      SELECT * FROM itDestinations WHERE it_dest_id=? AND is_deleted=0;
       `,
       [id],
       (error, results, fields) => {
@@ -57,11 +57,11 @@ module.exports = {
       }
     );
   },
-  getItRestaurantByItId: (id, callback) => {
+  getItDestinationByItId: (id, callback) => {
     pool.query(
       `
-      SELECT r.name, i.*
-      FROM itRestaurants i INNER JOIN restaurants r ON i.rest_id=r.rest_id
+      SELECT d.name, i.*
+      FROM itDestinations i INNER JOIN destinations d ON i.dest_id=d.dest_id
           WHERE it_id=? AND i.is_deleted=0
           ORDER BY start_datetime
       `,
@@ -95,8 +95,8 @@ module.exports = {
       }
     );
   },
-  updateItRestaurant: (data, callback) => {
-    const itRestaurant = {
+  updateItDestination: (data, callback) => {
+    const itDestination = {
       notes: data.notes,
       start_datetime: data.start_datetime,
       end_datetime: data.end_datetime,
@@ -104,11 +104,11 @@ module.exports = {
     };
     pool.query(
       `
-      UPDATE itRestaurants
+      UPDATE itDestinations
       SET ?
-      WHERE it_rest_id=? AND is_deleted=0;
+      WHERE it_dest_id=? AND is_deleted=0;
     `,
-      [itRestaurant, data.it_rest_id],
+      [itDestination, data.it_dest_id],
       (error, results, fields) => {
         if (error) {
           return callback(error);
@@ -117,13 +117,13 @@ module.exports = {
       }
     );
   },
-  deleteItRestaurant: (id, callback) => {
+  deleteItDestination: (id, callback) => {
     const dateNow = new Date();
     pool.query(
       `
-      UPDATE itRestaurants
+      UPDATE itDestinations
       SET is_deleted=1, deleted_on=?
-      WHERE it_rest_id=? AND is_deleted=0;
+      WHERE it_dest_id=? AND is_deleted=0;
       `,
       [dateNow, id],
       (error, results, fields) => {

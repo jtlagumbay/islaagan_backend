@@ -16,6 +16,7 @@ const itinerariesRouter = require("./api/itineraries/itinerary.router");
 const itRestaurantRouter = require("./api/itRestaurants/itRestaurant.router");
 const itAccommodationRouter = require("./api/itAccommodations/itAccommodation.router");
 const itAquaticRouter = require("./api/itAquatics/itAquatic.router");
+const itDestinationRouter = require("./api/itDestinations/itDestination.router");
 
 app.use(cors());
 // app.options("*", cors());
@@ -34,6 +35,7 @@ app.use("/itineraries", checkAPI, itinerariesRouter);
 app.use("/itRestaurants", checkAPI, itRestaurantRouter);
 app.use("/itAccommodations", checkAPI, itAccommodationRouter);
 app.use("/itAquatics", checkAPI, itAquaticRouter);
+app.use("/itDestinations", checkAPI, itDestinationRouter);
 
 const port = process.env.APP_PORT || 3001;
 
