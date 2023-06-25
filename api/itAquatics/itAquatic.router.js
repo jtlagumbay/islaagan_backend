@@ -13,6 +13,7 @@ const router = express.Router();
 router.post("/create", checkToken, createItAquatic);
 router.post("/get", checkToken, getItAquaticById);
 router.post("/getByItId", checkToken, getItAquaticByItId);
+router.post("/share/getByItId", getItAquaticByItId);
 router.post("/update", checkToken, updateItAquatic);
 router.post("/delete", checkToken, deleteItAquatic);
 

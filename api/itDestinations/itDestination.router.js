@@ -13,6 +13,7 @@ const router = express.Router();
 router.post("/create", checkToken, createItDestination);
 router.post("/get", checkToken, getItDestinationById);
 router.post("/getByItId", checkToken, getItDestinationByItId);
+router.post("/share/getByItId", getItDestinationByItId);
 router.post("/update", checkToken, updateItDestination);
 router.post("/delete", checkToken, deleteItDestination);
 
