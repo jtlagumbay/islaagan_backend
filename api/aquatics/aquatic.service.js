@@ -62,7 +62,7 @@ module.exports = {
       }
     );
   },
-  getRecoAquatic: (type, price_min, callback) => {
+  getRecoAquatic: (type, entrance_fee, callback) => {
     pool.query(
       `
       SELECT t1.*, MAX(t3.image_name) as image_name 
@@ -80,7 +80,7 @@ module.exports = {
       LIMIT 9
       ;
 `,
-      [type, price_min],
+      [type, entrance_fee],
       (error, results, fields) => {
         if (error) {
           return callback(error);

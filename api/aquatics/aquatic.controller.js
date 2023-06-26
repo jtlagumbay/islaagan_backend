@@ -89,9 +89,9 @@ module.exports = {
   },
   getRecoAquatic: (req, res) => {
     const type = req.body.type;
-    const price_min = req.body.price_min;
+    const entrance_fee = req.body.entrance_fee;
 
-    getRecoAquatic(type, price_min, (err, results) => {
+    getRecoAquatic(type, entrance_fee, (err, results) => {
       if (err) {
         console.error(err);
         if (err.errno == -4078) {
