@@ -66,4 +66,24 @@ module.exports = {
       }
     );
   },
+  getRecoRestaurant: (type, cuisine, callback) => {
+    pool.query(
+      `
+       SELECT * FROM restaurants WHERE type LIKE CONCAT('%', ?, '%')
+        UNION 
+        SELECT * FROM restaurants WHERE  cuisine LIKE CONCAT('%', ?, '%')
+        ORDER by rand()
+        LIMIT 5
+        ;
+
+      `,
+      [type, cuisine],
+      (error, results, fields) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
+      }
+    );
+  },
 };
