@@ -2,6 +2,7 @@ const {
   getAllAquatics,
   getAquaticById,
   getAquaticByDestId,
+  getRecoAquatic,
 } = require("./aquatic.service");
 
 module.exports = {
@@ -78,6 +79,37 @@ module.exports = {
         return res.status(400).json({
           success: 0,
           message: "No aquatic retreats found in destination.",
+        });
+      }
+      return res.status(200).json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
+  getRecoAquatic: (req, res) => {
+    const type = req.body.type;
+    const price_min = req.body.price_min;
+
+    getRecoAquatic(type, price_min, (err, results) => {
+      if (err) {
+        console.error(err);
+        if (err.errno == -4078) {
+          return res.status(500).json({
+            success: 0,
+            error: "Database connection error",
+          });
+        } else
+          return res.status(400).json({
+            success: 0,
+            error: err,
+          });
+      }
+      console.log(results);
+      if (results.length < 1) {
+        return res.status(400).json({
+          success: 0,
+          message: "No recommended restaurants found.",
         });
       }
       return res.status(200).json({

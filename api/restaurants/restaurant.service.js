@@ -80,9 +80,9 @@ module.exports = {
       `
       SELECT t1.*, MAX(t3.image_name) as image_name 
       FROM (
-      SELECT rest_id, name, description, price_min, price_max FROM restaurants WHERE type LIKE CONCAT('%', "casual", '%')
+      SELECT rest_id, name, description, price_min, price_max FROM restaurants WHERE type LIKE CONCAT('%', ?, '%')
       UNION 
-      SELECT rest_id, name, description, price_min, price_max FROM restaurants WHERE  cuisine LIKE CONCAT('%', "english", '%')) AS t1
+      SELECT rest_id, name, description, price_min, price_max FROM restaurants WHERE  cuisine LIKE CONCAT('%', ?, '%')) AS t1
       LEFT JOIN ( 
         SELECT category_id, image_name FROM images i where category="rest" 
       ) AS t3 ON t1.rest_id = t3.category_id
