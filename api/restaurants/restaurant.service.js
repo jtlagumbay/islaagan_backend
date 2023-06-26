@@ -68,15 +68,30 @@ module.exports = {
   },
   getRecoRestaurant: (type, cuisine, callback) => {
     pool.query(
-      `
-       SELECT * FROM restaurants WHERE type LIKE CONCAT('%', ?, '%')
-        UNION 
-        SELECT * FROM restaurants WHERE  cuisine LIKE CONCAT('%', ?, '%')
-        ORDER by rand()
-        LIMIT 5
-        ;
+      // `
+      //  SELECT * FROM restaurants WHERE type LIKE CONCAT('%', ?, '%')
+      //   UNION
+      //   SELECT * FROM restaurants WHERE  cuisine LIKE CONCAT('%', ?, '%')
+      //   ORDER by rand()
+      //   LIMIT 9
+      //   ;
 
-      `,
+      // `
+      `
+      SELECT t1.*, MAX(t3.image_name) as image_name 
+      FROM (
+      SELECT rest_id, name, description, price_min, price_max FROM restaurants WHERE type LIKE CONCAT('%', "casual", '%')
+      UNION 
+      SELECT rest_id, name, description, price_min, price_max FROM restaurants WHERE  cuisine LIKE CONCAT('%', "english", '%')) AS t1
+      LEFT JOIN ( 
+        SELECT category_id, image_name FROM images i where category="rest" 
+      ) AS t3 ON t1.rest_id = t3.category_id
+      GROUP BY t1.rest_id, t1.name, t1.description, t1.price_min, t1.price_max
+
+      ORDER by rand()  
+      LIMIT 9
+      ;
+`,
       [type, cuisine],
       (error, results, fields) => {
         if (error) {
