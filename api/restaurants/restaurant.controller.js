@@ -3,6 +3,7 @@ const {
   getAllRestaurants,
   getRestaurantById,
   getRestaurantByDestId,
+  getRecoRestaurant,
 } = require("./restaurant.service");
 
 module.exports = {
@@ -80,6 +81,37 @@ module.exports = {
         return res.status(400).json({
           success: 0,
           message: "No restaurant found in destination.",
+        });
+      }
+      return res.status(200).json({
+        success: 1,
+        data: results,
+      });
+    });
+  },
+  getRecoRestaurant: (req, res) => {
+    const type = req.body.type;
+    const cuisine = req.body.cuisine;
+
+    getRecoRestaurant(type, cuisine, (err, results) => {
+      if (err) {
+        console.error(err);
+        if (err.errno == -4078) {
+          return res.status(500).json({
+            success: 0,
+            error: "Database connection error",
+          });
+        } else
+          return res.status(400).json({
+            success: 0,
+            error: err,
+          });
+      }
+      console.log(results);
+      if (results.length < 1) {
+        return res.status(400).json({
+          success: 0,
+          message: "No recommended restaurants found.",
         });
       }
       return res.status(200).json({
