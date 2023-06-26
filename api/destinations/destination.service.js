@@ -46,7 +46,7 @@ module.exports = {
   getTop5: (callback) => {
     pool.query(
       `
-      SELECT t2.*
+      SELECT t2.*, min(t3.image_name) as image_name
       FROM (
         SELECT it_id FROM itAccommodations
         UNION SELECT it_id FROM itAquatics
@@ -54,6 +54,10 @@ module.exports = {
         UNION SELECT it_id FROM itRestaurants
       ) AS t1
       JOIN destinations AS t2 ON t1.it_id = t2.dest_id
+      left JOIN ( 
+        SELECT category_id, image_name FROM images i where category="dest" 
+      ) AS t3 ON t1.it_id = t3.category_id
+      GROUP BY it_id
       ORDER BY t1.it_id DESC
       LIMIT 5
       ;
