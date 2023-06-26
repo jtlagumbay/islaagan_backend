@@ -1,6 +1,7 @@
 const {
   getAllDestinations,
   getDestinationById,
+  getTop5,
 } = require("./destination.service");
 
 module.exports = {
@@ -56,6 +57,33 @@ module.exports = {
       return res.status(200).json({
         success: 1,
         data: results[0],
+      });
+    });
+  },
+
+  getTop5: (req, res) => {
+    getTop5((err, results) => {
+      if (err) {
+        if (err.errno == -4078) {
+          return res.status(500).json({
+            success: 0,
+            error: "Database connection error.",
+          });
+        } else
+          return res.status(400).json({
+            success: 0,
+            error: err,
+          });
+      }
+      if (results.length < 1) {
+        return res.status(400).json({
+          success: 0,
+          message: "There is a problem with the query.",
+        });
+      }
+      return res.status(200).json({
+        success: 1,
+        data: results,
       });
     });
   },
