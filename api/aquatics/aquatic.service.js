@@ -28,7 +28,7 @@ module.exports = {
       // FROM aquatics WHERE aqua_id=?
       // `
       `
-        SELECT d.name, a.*, GROUP_CONCAT(i.image_name) as image_names 
+        SELECT d.name as dest_name, a.*, GROUP_CONCAT(i.image_name) as image_names 
         FROM aquatics a JOIN images i ON a.aqua_id=i.category_id JOIN destinations d ON a.dest_id=d.dest_id
         WHERE i.category="aqua" AND a.aqua_id=?
         GROUP BY i.category_id
