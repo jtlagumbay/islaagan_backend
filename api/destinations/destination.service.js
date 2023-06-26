@@ -43,4 +43,27 @@ module.exports = {
       }
     );
   },
+  getTop5: (callback) => {
+    pool.query(
+      `
+      SELECT t2.*
+      FROM (
+        SELECT it_id FROM itAccommodations
+        UNION SELECT it_id FROM itAquatics
+        UNION SELECT it_id FROM itDestinations
+        UNION SELECT it_id FROM itRestaurants
+      ) AS t1
+      JOIN destinations AS t2 ON t1.it_id = t2.dest_id
+      ORDER BY t1.it_id DESC
+      LIMIT 5
+      ;
+      `,
+      (error, results, fields) => {
+        if (error) {
+          return callback(error);
+        }
+        return callback(null, results);
+      }
+    );
+  },
 };
