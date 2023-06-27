@@ -129,7 +129,7 @@ module.exports = {
       `
       UPDATE itineraries
       SET is_deleted=1, deleted_on=?
-      WHERE it_id=? is_deleted=0;
+      WHERE it_id=? AND is_deleted=0;
       `,
       [dateNow, id],
       (error, results, fields) => {
