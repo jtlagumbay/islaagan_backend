@@ -4,6 +4,7 @@ const {
   getItinerariesByUserId,
   updateItinerary,
   deleteItinerary,
+  getItineraryByIdShare,
 } = require("./itinerary.service");
 
 module.exports = {
@@ -33,6 +34,33 @@ module.exports = {
     const id = req.body.it_id;
     const user_id = req.body.user_id;
     getItineraryById(id, user_id, (err, results) => {
+      if (err) {
+        if (err.errno == -4078) {
+          return res.status(500).json({
+            success: 0,
+            error: "Database connection error.",
+          });
+        } else
+          return res.status(400).json({
+            success: 0,
+            error: err,
+          });
+      }
+      if (results.length < 1) {
+        return res.status(400).json({
+          success: 0,
+          message: "Itinerary not found.",
+        });
+      }
+      return res.status(200).json({
+        success: 1,
+        data: results[0],
+      });
+    });
+  },
+  getItineraryByIdShare: (req, res) => {
+    const id = req.body.it_id;
+    getItineraryByIdShare(id, (err, results) => {
       if (err) {
         if (err.errno == -4078) {
           return res.status(500).json({
