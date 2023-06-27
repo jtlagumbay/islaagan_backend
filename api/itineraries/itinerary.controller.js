@@ -31,7 +31,8 @@ module.exports = {
   },
   getItineraryById: (req, res) => {
     const id = req.body.it_id;
-    getItineraryById(id, (err, results) => {
+    const user_id = req.body.user_id;
+    getItineraryById(id, user_id, (err, results) => {
       if (err) {
         if (err.errno == -4078) {
           return res.status(500).json({

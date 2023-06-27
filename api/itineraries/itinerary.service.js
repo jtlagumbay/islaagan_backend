@@ -22,12 +22,12 @@ module.exports = {
       }
     );
   },
-  getItineraryById: (id, callback) => {
+  getItineraryById: (id, user_id, callback) => {
     pool.query(
       `
-      SELECT * FROM itineraries WHERE it_id=? AND is_deleted=0;
+      SELECT * FROM itineraries WHERE it_id=? AND user_id=? AND is_deleted=0;
       `,
-      [id],
+      [id, user_id],
       (error, results, fields) => {
         if (error) {
           return callback(error);
@@ -129,7 +129,7 @@ module.exports = {
       `
       UPDATE itineraries
       SET is_deleted=1, deleted_on=?
-      WHERE it_id=? AND is_deleted=0;
+      WHERE it_id=? is_deleted=0;
       `,
       [dateNow, id],
       (error, results, fields) => {
